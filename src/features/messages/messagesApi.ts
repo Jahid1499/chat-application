@@ -17,7 +17,7 @@ export const messagesApi = apiSlice.injectEndpoints({
 
             async onCacheEntryAdded(arg, { updateCachedData, cacheDataLoaded, cacheEntryRemoved }) {
                 // create socket
-                const socket = io(import.meta.env.VITE_APP_API_URL, {
+                const socket = io(import.meta.env.VITE_APP_URL, {
                     reconnectionDelay: 1000,
                     reconnection: true,
                     reconnectionAttemps: 10,
@@ -71,7 +71,7 @@ export const messagesApi = apiSlice.injectEndpoints({
                     if (messages?.data?.length > 0) {
                         // update conversation cache pessimistically start
                         dispatch(
-                            apiSlice.util.updateQueryData(
+                            messagesApi.util.updateQueryData(
                                 "getMessages",
                                 id,
                                 (draft) => {

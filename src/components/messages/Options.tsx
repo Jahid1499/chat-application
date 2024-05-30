@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-// import { useEditConversationMutation } from "../../../features/conversations/conversationsApi";
+import { useEditConversationMutation } from "../../features/conversations/conversationsApi";
 
 export default function Options({ info }) {
   const [message, setMessage] = useState("");
@@ -18,7 +18,6 @@ export default function Options({ info }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // add conversation
     editConversation({
       id: info?.conversationId,
       sender: loggedInUser?.email,

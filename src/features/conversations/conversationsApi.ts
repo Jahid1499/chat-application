@@ -16,7 +16,8 @@ export const conversationsApi = apiSlice.injectEndpoints({
             },
             async onCacheEntryAdded(arg, { updateCachedData, cacheDataLoaded, cacheEntryRemoved }) {
                 // create socket
-                const socket = io(import.meta.env.VITE_APP_API_URL, {
+
+                const socket = io(import.meta.env.VITE_APP_URL, {
                     reconnectionDelay: 1000,
                     reconnection: true,
                     reconnectionAttemps: 10,
@@ -59,7 +60,7 @@ export const conversationsApi = apiSlice.injectEndpoints({
                     if (conversations?.data?.length > 0) {
                         // update conversation cache pessimistically start
                         dispatch(
-                            apiSlice.util.updateQueryData(
+                            conversationsApi.util.updateQueryData(
                                 "getConversations",
                                 email,
                                 (draft) => {
@@ -101,7 +102,7 @@ export const conversationsApi = apiSlice.injectEndpoints({
                     );
 
                     dispatch(
-                        apiSlice.util.updateQueryData(
+                        conversationsApi.util.updateQueryData(
                             "getConversations",
                             senderUser.email,
                             (draft) => {
@@ -129,7 +130,7 @@ export const conversationsApi = apiSlice.injectEndpoints({
                     console.log(res)
 
                     dispatch(
-                        apiSlice.util.updateQueryData(
+                        messagesApi.util.updateQueryData(
                             "getMessages",
                             res.data.conversationId.toString(),
                             (draft) => {
@@ -149,7 +150,7 @@ export const conversationsApi = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
                 // optimistic cache update start
                 const pathResult = dispatch(
-                    apiSlice.util.updateQueryData(
+                    conversationsApi.util.updateQueryData(
                         "getConversations",
                         arg.sender,
                         (draft) => {
@@ -187,7 +188,7 @@ export const conversationsApi = apiSlice.injectEndpoints({
 
                         // update messages cache pessimistically start
                         dispatch(
-                            apiSlice.util.updateQueryData(
+                            messagesApi.util.updateQueryData(
                                 "getMessages",
                                 res.conversationId.toString(),
                                 (draft) => {

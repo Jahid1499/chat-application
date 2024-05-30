@@ -41,7 +41,7 @@ export default function ChatItems() {
     if (totalCount > 0) {
       const more =
         Math.ceil(
-          totalCount / Number(process.env.REACT_APP_CONVERSATIONS_PER_PAGE)
+          totalCount / Number(import.meta.env.VITE_APP_CONVERSATIONS_PER_PAGE)
         ) > page;
 
       setHasMore(more);
