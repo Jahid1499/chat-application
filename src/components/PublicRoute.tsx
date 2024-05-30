@@ -4,5 +4,5 @@ import { NodePropsTypes } from "../types/types";
 
 export default function PublicRoute({ children }: NodePropsTypes) {
   const isLoggedIn = useAuth();
-  return !isLoggedIn ? children : <Navigate to="/teams" />;
+  return !isLoggedIn ? children : <Navigate to="/inbox" />;
 }
