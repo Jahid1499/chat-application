@@ -17,13 +17,12 @@ export default function Navigation() {
           <Link to="/">
             <img className="h-10" src={logoImage} alt="Learn with Summit" />
           </Link>
-          <ul>
-            <li className="text-white">
-              <span className="cursor-pointer" onClick={logout}>
-                Logout
-              </span>
-            </li>
-          </ul>
+
+          <button onClick={logout}>
+            <span className="flex items-center mx-4 h-6 px-6 py-4 text-sm font-semibold text-indigo-700 hover:bg-indigo-200 bg-white rounded-full">
+              Logout
+            </span>
+          </button>
         </div>
       </div>
     </nav>
