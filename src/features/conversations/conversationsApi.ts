@@ -30,19 +30,25 @@ export const conversationsApi = apiSlice.injectEndpoints({
                 try {
                     await cacheDataLoaded;
                     socket.on("conversation", (data) => {
-
                         updateCachedData((draft) => {
-                            const conversation = draft.data.find(
+                            const conversation = draft?.data?.find(
                                 (c) => c.id == data?.data?.id
                             );
 
                             if (conversation?.id) {
                                 conversation.message = data?.data?.message;
                                 conversation.timestamp = data?.data?.timestamp;
+
+                                draft.data.sort((a, b) => b.timestamp - a.timestamp);
                             } else {
 
-                                // do nothing
+                                const upcomingParticipant = data?.data['participants'].split("-");
+                                if (upcomingParticipant.includes(arg)) {
+                                    draft.data.unshift(data.data)
+                                }
+
                             }
+
                         });
                     });
                 } catch (err) { }
@@ -101,21 +107,21 @@ export const conversationsApi = apiSlice.injectEndpoints({
                         (user) => user.email !== arg.sender
                     );
 
-                    dispatch(
-                        conversationsApi.util.updateQueryData(
-                            "getConversations",
-                            senderUser.email,
-                            (draft) => {
-                                return {
-                                    data: [
-                                        conversation.data,
-                                        ...draft.data,
-                                    ],
-                                    totalCount: Number(draft.totalCount) + 1,
-                                }
-                            }
-                        )
-                    );
+                    // dispatch(
+                    //     conversationsApi.util.updateQueryData(
+                    //         "getConversations",
+                    //         senderUser.email,
+                    //         (draft) => {
+                    //             return {
+                    //                 data: [
+                    //                     conversation.data,
+                    //                     ...draft.data,
+                    //                 ],
+                    //                 totalCount: Number(draft.totalCount) + 1,
+                    //             }
+                    //         }
+                    //     )
+                    // );
 
                     const res = await dispatch(
                         messagesApi.endpoints.addMessage.initiate({
@@ -126,8 +132,6 @@ export const conversationsApi = apiSlice.injectEndpoints({
                             timestamp: arg.data.timestamp,
                         })
                     );
-
-                    console.log(res)
 
                     dispatch(
                         messagesApi.util.updateQueryData(
@@ -154,11 +158,17 @@ export const conversationsApi = apiSlice.injectEndpoints({
                         "getConversations",
                         arg.sender,
                         (draft) => {
+                            // const updatedData = {
+                            //     id: arg.id,
+                            //     ...arg.data
+                            // }
+
                             const draftConversation = draft.data.find(
                                 (c) => c.id == arg.id
                             );
                             draftConversation.message = arg.data.message;
                             draftConversation.timestamp = arg.data.timestamp;
+                            draft.data.sort((a, b) => b.timestamp - a.timestamp);
                         }
                     )
                 );

@@ -29,23 +29,11 @@ export const messagesApi = apiSlice.injectEndpoints({
 
                 try {
                     await cacheDataLoaded;
-                    socket.on("messagesOne", (data) => {
+                    socket.on("messages", (data) => {
                         updateCachedData((draft) => {
-
-                            // console.log('draft')
-                            // console.log(JSON.parse(JSON.stringify(draft)))
-                            // console.log('draft')
-
                             const messages = draft.data.find(
                                 (c) => c.conversationId == data?.data?.conversationId
                             );
-                            // console.log('maching')
-                            // console.log(JSON.parse(JSON.stringify(messages)))
-                            // console.log('maching')
-
-                            // console.log('data')
-                            // console.log(data)
-                            // console.log('data')
 
                             if (messages?.conversationId) {
                                 draft.data.unshift(data?.data)
