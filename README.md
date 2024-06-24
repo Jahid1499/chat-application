@@ -2,7 +2,6 @@
 
 ## Documentation
 
-[Application's documentation](https://docs.google.com/document/d/1-pzQQ2Vi5ZxPzgd223zEHDYybJxNKRegsov3s3kniUo/edit?usp=sharing)
 
 # Project Plan
 
