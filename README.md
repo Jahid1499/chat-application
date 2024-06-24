@@ -58,7 +58,7 @@ git clone https://github.com/Jahid1499/chat-application.git
 2. First you need run server - for this follow those step
 
    ```sh
-   cd server
+   cd backend
    ```
 
 3. Install dependency
